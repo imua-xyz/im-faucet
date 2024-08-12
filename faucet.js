@@ -2,6 +2,7 @@ import { ethers } from "ethers";
 import express from "express";
 import config from "./config.json" assert { type: "json" };
 import abi from "./abi.json" assert { type: "json" };
+import { fromBech32, isValidBech32, toBech32 } from "./utils.js";
 import "dotenv/config";
 
 // Configure your provider and wallet
@@ -20,13 +21,21 @@ app.use(express.json());
 app.post("/request", async (req, res) => {
   const { address } = req.body;
 
+  let recipient = address;
+
   if (!ethers.isAddress(address)) {
-    return res.status(400).send("Invalid address");
+    if (isValidBech32(address)) {
+      recipient = fromBech32(address);
+    } else {
+      return res.status(400).send("Invalid address");
+    }
   }
+
+  console.log("recipient:", recipient);
 
   try {
     // Call the withdraw function
-    const tx = await contract.withdraw(address);
+    const tx = await contract.withdraw(recipient);
     console.log("Transaction sent:", tx.hash);
 
     // Wait for the transaction to be mined
@@ -34,7 +43,9 @@ app.post("/request", async (req, res) => {
     res.status(200).send({ txHash: tx.hash });
   } catch (error) {
     console.error(error);
-    res.status(500).send("Transaction failed");
+    res
+      .status(500)
+      .send({ error: error?.info?.error?.message ?? error?.message ?? error });
   }
 });
 
