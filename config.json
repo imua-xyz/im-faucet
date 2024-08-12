@@ -1,11 +1,8 @@
 {
-  "chainId": "exocoretestnet_233-4",
-  "lcdUrl": "https://api-cosmos-grpc.exocore-restaking.com",
-  "denom": "aexo",
-  "prefix": "exo",
-  "feeAmount": 5000,
-  "AmountSend": 1000000,
-  "gasLimit": 200000,
+  "rpcUrl": "https://api-eth.exocore-restaking.com",
+  "chainId": 233,
+  "symbol": "exo",
+  "sendAmount": "0.01",
   "port": 8000,
-  "hdPath": "m/44'/60'/0'/0/0"
+  "contract": "0xdDc543F0eF9174997219AC3dF98571Db60f7C944"
 }
