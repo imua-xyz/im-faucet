@@ -5,14 +5,16 @@
   "main": "app.js",
   "type": "module",
   "scripts": {
-    "start": "node --experimental-modules --es-module-specifier-resolution=node app.js",
+    "start": "node faucet.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@cosmostation/cosmosjs": "^0.11.2",
+    "@cosmjs/crypto": "^0.32.4",
+    "@cosmjs/proto-signing": "^0.32.4",
+    "@cosmjs/stargate": "^0.32.4",
     "dotenv": "^16.4.5",
     "express": "^4.17.1"
   }
