@@ -1,0 +1,19 @@
+{
+  "name": "cosmos-faucet",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "type": "module",
+  "scripts": {
+    "start": "node --experimental-modules --es-module-specifier-resolution=node app.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@cosmostation/cosmosjs": "^0.11.2",
+    "dotenv": "^16.4.5",
+    "express": "^4.17.1"
+  }
+}

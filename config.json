@@ -1,0 +1,11 @@
+{
+  "chainId": "exocoretestnet_233-4",
+  "lcdUrl": "https://api-eth.exocore-restaking.com",
+  "denom": "aexo",
+  "prefix": "exo",
+  "feeAmount": 5000,
+  "AmountSend": 1000000,
+  "memo": "Sent using Cosmostation-CosmoJS ;-)",
+  "lport": 8000,
+  "gasLimit": 200000
+}
