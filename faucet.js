@@ -25,12 +25,28 @@ async function setupClient() {
   console.log("root address:", rootAddress);
 
   client = await SigningStargateClient.connectWithSigner(config.lcdUrl, wallet);
+  const chainId = await client.getChainId();
+  console.log("chain id:", chainId);
 }
+
+setupClient();
 
 // Handle faucet request
 async function handleRequest(address) {
   if (!client) {
     await setupClient();
+  }
+
+  try {
+    // Fetch the current balance
+    const account = await client.getAccount(rootAddress);
+    account.balances.forEach((balance) => {
+      console.log(`${rootAddress}: ${balance.amount} ${balance.denom}`);
+    });
+  } catch (e) {
+    console.log("---------------------");
+    console.log("balance error:", e);
+    console.log("---------------------");
   }
 
   try {
@@ -56,7 +72,9 @@ async function handleRequest(address) {
 
     return { success: true, txHash: result.transactionHash };
   } catch (error) {
-    console.log(error);
+    console.log("---------------------");
+    console.log("tx send error:", error);
+    console.log("---------------------");
     return { success: false, error: error.message };
   }
 }
