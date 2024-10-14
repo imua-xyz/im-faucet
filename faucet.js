@@ -2,23 +2,22 @@ import { ethers } from "ethers";
 import express from "express";
 import config from "./config.json" assert { type: "json" };
 import abi from "./abi.json" assert { type: "json" };
-import { fromBech32, isValidBech32, toBech32 } from "./utils.js";
+import { fromBech32, isValidBech32 } from "./utils.js";
 import "dotenv/config";
 
 // Configure your provider and wallet
-const provider = new ethers.JsonRpcProvider(config.rpcUrl);
-const wallet = ethers.Wallet.fromPhrase(
-  process.env.FAUCET_MNEMONIC ?? "",
-  provider
+const provider = new ethers.JsonRpcProvider(process.env.RPC_URL);
+const wallet = new ethers.Wallet(
+  process.env.OWNER_PRIVATE_KEY, provider
 );
-const contract = new ethers.Contract(config.contract, abi, wallet);
+const contract = new ethers.Contract(process.env.CONTRACT_ADDRESS, abi, wallet);
 
 // Express server
 const app = express();
 
 app.use(express.json());
 
-app.post("/request", async (req, res) => {
+app.post("/", async (req, res) => {
   const { address } = req.body;
 
   let recipient = address;

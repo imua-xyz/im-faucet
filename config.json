@@ -1,8 +1,3 @@
 {
-  "rpcUrl": "https://api-eth.exocore-restaking.com",
-  "chainId": 233,
-  "symbol": "exo",
-  "sendAmount": "0.01",
-  "port": 8000,
-  "contract": "0xdDc543F0eF9174997219AC3dF98571Db60f7C944"
+  "port": 8000
 }
