@@ -2,7 +2,7 @@ import { decode, encode, toWords, fromWords } from "bech32";
 import { Buffer } from "buffer";
 import { ethers } from "ethers";
 
-const exocoreBech32Prefix = "exo";
+const imuachainBech32Prefix = "im";
 
 // Function to validate a Bech32 address
 export const isValidBech32 = (address) => {
@@ -11,7 +11,7 @@ export const isValidBech32 = (address) => {
     if (!prefix || !words.length) {
       return false;
     }
-    return prefix === exocoreBech32Prefix;
+    return prefix === imuachainBech32Prefix;
   } catch (error) {
     // If there's any error in decoding, return false
     return false;
@@ -25,7 +25,7 @@ export const toBech32 = (hexAddress) => {
     : hexAddress;
   const buffer = Buffer.from(strippedAddress, "hex");
   const words = toWords(buffer);
-  return encode(exocoreBech32Prefix, words);
+  return encode(imuachainBech32Prefix, words);
 };
 
 // Function to convert a Bech32 encoded address to a hexadecimal string
