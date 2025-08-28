@@ -11,6 +11,7 @@ const wallet = new ethers.Wallet(
   process.env.OWNER_PRIVATE_KEY, provider
 );
 const contract = new ethers.Contract(process.env.CONTRACT_ADDRESS, abi, wallet);
+const verifyUrl = `https://www.google.com/recaptcha/api/siteverify?secret=${process.env.RECAPTCHA_SECRET_KEY}`;
 
 // Express server
 const app = express();
@@ -18,7 +19,12 @@ const app = express();
 app.use(express.json());
 
 app.post("/", async (req, res) => {
-  const { address } = req.body;
+  const { address, captcha } = req.body;
+  const recaptchaResponse = await fetch(verifyUrl + `&response=${captcha}`, { method: "POST" });
+  const recaptchaData = await recaptchaResponse.json();
+  if (!recaptchaData.success) {
+    return res.status(400).send({ error: "Invalid captcha" });
+  }
 
   let recipient = address;
 
@@ -26,7 +32,7 @@ app.post("/", async (req, res) => {
     if (isValidBech32(address)) {
       recipient = fromBech32(address);
     } else {
-      return res.status(400).send("Invalid address");
+      return res.status(400).send({ error: "Invalid address" });
     }
   }
 
